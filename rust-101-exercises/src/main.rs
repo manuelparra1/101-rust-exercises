@@ -1,4 +1,6 @@
-use rand::Rng;
+//use rand::{Rng, thread_rng};
+use rand::thread_rng;
+use rand::seq::IteratorRandom;
 
 fn main() {
     // Exercise #1
@@ -108,17 +110,35 @@ fn main() {
     //> ### Hint Be sure to return values from your function definitions. The assert statements will call your function(s) for you.
 
     // Exercise #11
-    // insert code below:
-    let mut rng = rand::thread_rng();
-    let positive_even_number = rng.gen_range(2, 102) / 2 * 2;
-    let negative_even_number = rng.gen_range(-100, 0) / 2 * 2;
-    let positive_odd_number = rng.gen_range(1, 100) / 2 * 2 + 1;
-    let negative_odd_number = rng.gen_range(-101, -1) / 2 * 2 + 1;
+    // insert code below: 
+    let mut rng = thread_rng();
+    
+    let positive_even_number = (2..=100).step_by(2)
+        .choose(&mut rng)
+        .expect("Failed to generate a positive even number");
+
+    let negative_even_number = (-100..=0).step_by(2)
+        .choose(&mut rng)
+        .expect("Failed to generate a negative even number");
+
+    let positive_odd_number = (1..=99).step_by(2)
+        .choose(&mut rng)
+        .expect("Failed to generate a positive odd number");
+
+    let negative_odd_number = (-101..=-1).step_by(2)
+        .choose(&mut rng)
+        .expect("Failed to generate a negative odd number");
+
+    let positive_even_number = positive_even_number as u32;
+    let negative_even_number = negative_even_number as u32;
+    let positive_odd_number = positive_odd_number as u32;
+    let negative_odd_number = negative_odd_number as u32;
 
     println!("We now have some random numbers available for future exercises.");
     println!("The random positive even number is {}", positive_even_number);
     println!("The random positive odd number is {}", positive_odd_number);
     println!("The random negative even number is {}", negative_even_number);
     println!("The random negative odd number is {}", negative_odd_number);
+
     // insert code above
 }
